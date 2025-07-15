@@ -1,11 +1,10 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract Voting {
     // Address of the contract owner (deployer)
     address public owner;
 
-    /// @notice Represents a candidate running in the election
+    // Represents a candidate running in the election
     struct Candidate {
         string name;      
         uint voteCount; 
@@ -23,17 +22,17 @@ contract Voting {
         _;
     }
 
-    /// @notice Constructor sets the deployer as the contract owner
+    // Constructor sets the deployer as the contract owner
     constructor() {
         owner = msg.sender;
     }
 
-    /// @notice Add a new candidate to the election
+    // Add a new candidate to the election
     function addCandidate(string calldata name) external onlyOwner {
         candidates.push(Candidate(name, 0));
     }
 
-    /// @notice Vote for a candidate by index
+    // Vote for a candidate by index
     function vote(uint256 candidateIndex) external {
         require(candidateIndex < candidates.length, "Invalid candidate index");
         require(!hasVoted[msg.sender], "You have already voted");
@@ -42,15 +41,12 @@ contract Voting {
         candidates[candidateIndex].voteCount += 1;
     }
 
-    /// @notice Retrieve all candidates and their vote counts
-    /// @return An array of candidates with their names and vote counts
+    // Retrieve all candidates and their vote counts
     function getCandidates() external view returns (Candidate[] memory) {
         return candidates;
     }
 
-    /// @notice Get the winner's name (the candidate with the highest votes)
-    /// @dev Returns "No votes cast" if no votes have been made, or "It's a tie" if tied.
-    /// @return winnerName The name of the winning candidate or relevant message
+    // Get the winner's name (the candidate with the highest votes)
     function getWinner() external view returns (string memory winnerName) {
         uint256 highestVotes = 0;
         uint256 winnerIndex = 0;
