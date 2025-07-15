@@ -1,8 +1,8 @@
-const Web3 = require("web3");
+const Web3 = require("web3").default;
 const { contractAddress, privateKey, rpcUrl } = require("../config/config");
 const contractJson = require("../abi/Voting.json");
 
-const web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl));
+const web3 = new Web3(rpcUrl);
 const account = web3.eth.accounts.privateKeyToAccount(privateKey);
 web3.eth.accounts.wallet.add(account);
 
@@ -27,7 +27,7 @@ async function vote(candidateIndex, voterAddress) {
 }
 
 async function getWinner() {
-    return contract.methods.getWinner.call();
+    return contract.methods.getWinner().call();
 }
 
 module.exports = {

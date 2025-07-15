@@ -17,12 +17,20 @@ router.post("/", async (req, res) => {
 //GET /candidates
 router.get("/", async (req, res) => {
     try {
-        const candidates = await voting.getCandidates();
+        const rawCandidates = await voting.getCandidates();
+        const candidates = cleanCandidateArray(rawCandidates);
         res.json(candidates);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Failed to fetch candidates"});
     }
 });
+
+function cleanCandidateArray(rawArray) {
+    return rawArray.map(item => ({
+        name: item.name,
+        voteCount: item.voteCount.toString()
+    }));
+}
 
 module.exports = router;
