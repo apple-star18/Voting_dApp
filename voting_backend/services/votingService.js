@@ -11,7 +11,7 @@ const contract = new web3.eth.Contract(contractJson.abi, contractAddress);
 async function addCandidate(name) {
     return contract.methods.addCandidate(name).send({
         from: account.address,
-        gas: 3000000
+        gas: 200000
     });
 }
 
@@ -22,7 +22,7 @@ async function getCandidates() {
 async function vote(candidateIndex, voterAddress) {
     return contract.methods.vote(candidateIndex).send({
         from: voterAddress,
-        gas: 3000000
+        gas: 20000
     });
 }
 
@@ -32,7 +32,7 @@ async function getWinner() {
 
 module.exports = {
     addCandidate,
-    getCandidates,
     vote,
+    getCandidates,
     getWinner
 };
