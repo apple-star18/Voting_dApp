@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
         const winner = await voting.getWinner();
         console.log(winner);
         res.json({ winner });
-    } catch (err) {
+    } catch (_err) {
         console.error(err);
         res.status(500).json({ error: "Failed to retrieve winner" });
     }
